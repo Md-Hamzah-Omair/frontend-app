@@ -1,4 +1,5 @@
 import FeatureShowcase from "@/components/FeatureShowcase";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import PricingSection from "@/components/PricingSection";
 import SocialProof from "@/components/SocialProof";
@@ -48,9 +49,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-mystic-mint bg-oceanic-noir px-4 py-12 text-center text-sm text-arctic-powder/70">
-        <p>&copy; {new Date().getFullYear()} Frontend App. All rights reserved.</p>
-      </footer>
+      <Footer />
     </main>
   );
 }

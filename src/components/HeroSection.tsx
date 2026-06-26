@@ -1,3 +1,5 @@
+import NeuralCanvas from "@/components/NeuralCanvas";
+
 export default function HeroSection() {
   return (
     <section
@@ -6,6 +8,7 @@ export default function HeroSection() {
     >
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,#114C5A_0%,rgba(17,76,90,0.45)_34%,transparent_62%)]" />
       <div className="absolute left-1/2 top-16 -z-10 h-56 w-56 -translate-x-1/2 rounded-full bg-forsythia/20 blur-3xl" />
+      <NeuralCanvas />
 
       <div className="mx-auto max-w-5xl">
         <p className="hero-enter hero-enter-0 mx-auto mb-6 inline-flex rounded-full border border-mystic-mint/25 bg-white/5 px-4 py-2 font-heading text-xs font-semibold uppercase tracking-[0.28em] text-mystic-mint backdrop-blur">
