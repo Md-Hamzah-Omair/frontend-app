@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 
 const PRICING_MATRIX = {
   currencies: {
@@ -86,6 +85,50 @@ type PriceNodeSet = {
 };
 
 type PriceNodeRefs = Record<TierId, PriceNodeSet>;
+
+function TierIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 3.75 19.25 8v8L12 20.25 4.75 16V8L12 3.75Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M4.95 8.15 12 12.25l7.05-4.1M12 20.25v-8"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="mt-0.5 h-4 w-4 shrink-0"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="m5 12.5 4.25 4.25L19 7"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
 
 const DEFAULT_SELECTION = {
   currency: "USD" as CurrencyCode,
@@ -294,7 +337,7 @@ export default function PricingSection() {
 
             return (
               <article
-                className={`relative flex flex-col rounded-[2rem] border p-6 shadow-sm transition-transform hover:-translate-y-1 sm:p-8 ${
+                className={`relative flex flex-col rounded-[2rem] border p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl sm:p-8 ${
                   tier.featured
                     ? "border-forsythia bg-nocturnal-expedition text-white shadow-xl"
                     : "border-mystic-mint bg-arctic-powder text-oceanic-noir"
@@ -308,8 +351,12 @@ export default function PricingSection() {
                 ) : null}
 
                 <div className="flex items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/90">
-                    <Image alt="" className="h-5 w-5" height={20} src={tier.icon} width={20} />
+                  <span
+                    className={`flex h-11 w-11 items-center justify-center rounded-2xl bg-white/90 ${
+                      tier.featured ? "text-oceanic-noir" : "text-nocturnal-expedition"
+                    }`}
+                  >
+                    <TierIcon />
                   </span>
                   <h3
                     className={`font-heading text-xl font-semibold ${
@@ -373,13 +420,7 @@ export default function PricingSection() {
                 <ul className="mt-8 space-y-4 text-sm">
                   {tier.features.map((feature) => (
                     <li className="flex gap-3" key={feature}>
-                      <Image
-                        alt=""
-                        className="mt-0.5 h-4 w-4"
-                        height={16}
-                        src="/assets/svgs/check.svg"
-                        width={16}
-                      />
+                      <CheckIcon />
                       <span
                         className={
                           tier.featured ? "text-arctic-powder/85" : "text-oceanic-noir/75"
