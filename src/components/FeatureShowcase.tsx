@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 
 const FEATURES = [
   {
@@ -57,6 +57,23 @@ const FEATURES = [
 export default function FeatureShowcase() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  function handleGridMouseMove(event: MouseEvent<HTMLDivElement>) {
+    const grid = event.currentTarget;
+    const { left, top } = grid.getBoundingClientRect();
+    const x = event.clientX - left;
+    const y = event.clientY - top;
+
+    grid.style.setProperty("--mouse-x", `${x}px`);
+    grid.style.setProperty("--mouse-y", `${y}px`);
+
+    grid.querySelectorAll<HTMLElement>(".feature-spotlight-card").forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+
+      card.style.setProperty("--mouse-x", `${event.clientX - cardRect.left}px`);
+      card.style.setProperty("--mouse-y", `${event.clientY - cardRect.top}px`);
+    });
+  }
+
   return (
     <section id="features" className="bg-mystic-mint/30 px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -75,7 +92,8 @@ export default function FeatureShowcase() {
         </div>
 
         <div
-          className="mt-12 grid auto-rows-min grid-cols-1 gap-6 md:grid-cols-3"
+          className="feature-spotlight-grid mt-12 grid auto-rows-min grid-cols-1 gap-6 md:grid-cols-3"
+          onMouseMove={handleGridMouseMove}
           onMouseLeave={() => setActiveIndex(null)}
         >
           {FEATURES.map((feature, index) => {
@@ -83,7 +101,7 @@ export default function FeatureShowcase() {
 
             return (
               <article
-                className={`${feature.span} group flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-[box-shadow,transform] duration-[240ms] ease-out ${
+                className={`${feature.span} feature-spotlight-card group relative flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-[box-shadow,transform] duration-[240ms] ease-out ${
                   isActive
                     ? "-translate-y-1 shadow-xl shadow-nocturnal-expedition/10"
                     : "hover:-translate-y-1 hover:shadow-lg hover:shadow-nocturnal-expedition/10"
@@ -94,7 +112,7 @@ export default function FeatureShowcase() {
                 <button
                   aria-controls={`feature-panel-${index}`}
                   aria-expanded={isActive}
-                  className="flex h-full w-full flex-col text-left"
+                  className="relative z-10 flex h-full w-full flex-col text-left"
                   onClick={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   type="button"

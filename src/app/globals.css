@@ -25,6 +25,26 @@
 }
 
 @layer utilities {
+  .feature-spotlight-card::before {
+    background: radial-gradient(
+      360px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(217, 232, 226, 0.28),
+      rgba(217, 232, 226, 0.12) 32%,
+      transparent 68%
+    );
+    content: "";
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 180ms ease-out;
+    z-index: 0;
+  }
+
+  .feature-spotlight-grid:hover .feature-spotlight-card::before {
+    opacity: 1;
+  }
+
   .hero-enter {
     animation-duration: 150ms;
     animation-fill-mode: both;

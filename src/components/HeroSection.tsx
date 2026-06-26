@@ -1,3 +1,4 @@
+import MagneticButton from "@/components/MagneticButton";
 import NeuralCanvas from "@/components/NeuralCanvas";
 
 export default function HeroSection() {
@@ -28,18 +29,22 @@ export default function HeroSection() {
         </p>
 
         <div className="hero-enter hero-enter-300 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a
-            className="inline-flex min-h-12 items-center justify-center rounded-full bg-forsythia px-7 py-3 text-sm font-bold text-oceanic-noir shadow-lg shadow-forsythia/20 transition-transform duration-[180ms] ease-out hover:-translate-y-0.5 hover:bg-deep-saffron focus:outline-none focus:ring-2 focus:ring-forsythia focus:ring-offset-2 focus:ring-offset-oceanic-noir"
-            href="#pricing"
-          >
-            Start automating
-          </a>
-          <a
-            className="inline-flex min-h-12 items-center justify-center rounded-full border border-mystic-mint px-7 py-3 text-sm font-bold text-mystic-mint transition-colors duration-[180ms] ease-out hover:bg-mystic-mint hover:text-oceanic-noir focus:outline-none focus:ring-2 focus:ring-mystic-mint focus:ring-offset-2 focus:ring-offset-oceanic-noir"
-            href="#features"
-          >
-            Explore platform
-          </a>
+          <MagneticButton>
+            <a
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-forsythia px-7 py-3 text-sm font-bold text-oceanic-noir shadow-lg shadow-forsythia/20 transition-transform duration-[180ms] ease-out hover:-translate-y-0.5 hover:bg-deep-saffron focus:outline-none focus:ring-2 focus:ring-forsythia focus:ring-offset-2 focus:ring-offset-oceanic-noir"
+              href="#pricing"
+            >
+              Start automating
+            </a>
+          </MagneticButton>
+          <MagneticButton>
+            <a
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-mystic-mint px-7 py-3 text-sm font-bold text-mystic-mint transition-colors duration-[180ms] ease-out hover:bg-mystic-mint hover:text-oceanic-noir focus:outline-none focus:ring-2 focus:ring-mystic-mint focus:ring-offset-2 focus:ring-offset-oceanic-noir"
+              href="#features"
+            >
+              Explore platform
+            </a>
+          </MagneticButton>
         </div>
       </div>
     </section>
