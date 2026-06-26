@@ -1,4 +1,6 @@
-import { type CSSProperties } from "react";
+"use client";
+
+import { useState, type CSSProperties } from "react";
 
 const FAQ_ITEMS = [
   {
@@ -31,6 +33,8 @@ function maskStyle(path: string): CSSProperties {
 }
 
 export default function FAQ() {
+  const [openIndex, setOpenIndex] = useState(0);
+
   return (
     <section
       className="bg-arctic-powder px-4 py-24 sm:px-6 lg:px-8"
@@ -49,27 +53,44 @@ export default function FAQ() {
         </div>
 
         <div className="mt-10 divide-y divide-mystic-mint overflow-hidden rounded-3xl border border-mystic-mint bg-white/80 shadow-sm">
-          {FAQ_ITEMS.map((item, index) => (
-            <details
-              className="group"
-              key={item.question}
-              open={index === 0}
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left transition-colors duration-200 hover:bg-oceanic-noir/5 sm:px-8 [&::-webkit-details-marker]:hidden">
-                <span className="font-heading text-base font-semibold text-oceanic-noir sm:text-lg">
-                  {item.question}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="h-5 w-5 shrink-0 bg-current text-oceanic-noir transition-transform duration-300 group-open:rotate-180 [mask-position:center] [mask-repeat:no-repeat] [mask-size:contain] [-webkit-mask-position:center] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:contain]"
-                  style={maskStyle("/assets/svgs/chevron-down.svg")}
-                />
-              </summary>
-              <div className="px-6 pb-6 text-sm leading-7 text-oceanic-noir/70 sm:px-8 sm:text-base">
-                {item.answer}
-              </div>
-            </details>
-          ))}
+          {FAQ_ITEMS.map((item, index) => {
+            const isOpen = openIndex === index;
+
+            return (
+              <article key={item.question}>
+                <button
+                  aria-controls={`faq-panel-${index}`}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors duration-200 hover:bg-oceanic-noir/5 sm:px-8"
+                  onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                  type="button"
+                >
+                  <span className="font-heading text-base font-semibold text-oceanic-noir sm:text-lg">
+                    {item.question}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`h-5 w-5 shrink-0 bg-current text-oceanic-noir transition-transform duration-300 [mask-position:center] [mask-repeat:no-repeat] [mask-size:contain] [-webkit-mask-position:center] [-webkit-mask-repeat:no-repeat] [-webkit-mask-size:contain] ${
+                      isOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                    style={maskStyle("/assets/svgs/chevron-down.svg")}
+                  />
+                </button>
+                <div
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  }`}
+                  id={`faq-panel-${index}`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="px-6 pb-6 text-sm leading-7 text-oceanic-noir/70 sm:px-8 sm:text-base">
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
         <a

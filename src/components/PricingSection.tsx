@@ -8,19 +8,16 @@ const PRICING_MATRIX = {
       label: "USD",
       symbol: "$",
       tariff: 1,
-      locale: "en-US",
     },
     EUR: {
       label: "EUR",
       symbol: "€",
       tariff: 0.92,
-      locale: "de-DE",
     },
     INR: {
       label: "INR",
       symbol: "₹",
       tariff: 83,
-      locale: "en-IN",
     },
   },
   billingCycles: {
@@ -144,9 +141,9 @@ function calculatePrice(
   const cycle = PRICING_MATRIX.billingCycles[billingCycle];
   const discountedTotal = regionalRate * cycle.multiplier * (1 - cycle.discount);
 
-  return Math.round(discountedTotal).toLocaleString(
-    PRICING_MATRIX.currencies[currency].locale,
-  );
+  return Math.round(discountedTotal)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function updateButtonState<T extends string>(
