@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type MouseEvent } from "react";
+import { useState } from "react";
 
 const FEATURES = [
   {
@@ -57,21 +57,8 @@ const FEATURES = [
 export default function FeatureShowcase() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  function handleGridMouseMove(event: MouseEvent<HTMLDivElement>) {
-    const grid = event.currentTarget;
-    const { left, top } = grid.getBoundingClientRect();
-    const x = event.clientX - left;
-    const y = event.clientY - top;
-
-    grid.style.setProperty("--mouse-x", `${x}px`);
-    grid.style.setProperty("--mouse-y", `${y}px`);
-
-    grid.querySelectorAll<HTMLElement>(".feature-spotlight-card").forEach((card) => {
-      const cardRect = card.getBoundingClientRect();
-
-      card.style.setProperty("--mouse-x", `${event.clientX - cardRect.left}px`);
-      card.style.setProperty("--mouse-y", `${event.clientY - cardRect.top}px`);
-    });
+  function handleGridMouseLeave() {
+    setActiveIndex(null);
   }
 
   return (
@@ -92,19 +79,18 @@ export default function FeatureShowcase() {
         </div>
 
         <div
-          className="feature-spotlight-grid mt-12 grid auto-rows-min grid-cols-1 gap-6 md:grid-cols-3"
-          onMouseMove={handleGridMouseMove}
-          onMouseLeave={() => setActiveIndex(null)}
+          className="mt-12 grid auto-rows-min grid-cols-1 items-start gap-6 md:grid-cols-3"
+          onMouseLeave={handleGridMouseLeave}
         >
           {FEATURES.map((feature, index) => {
             const isActive = activeIndex === index;
 
             return (
               <article
-                className={`${feature.span} feature-spotlight-card group relative flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-[box-shadow,transform] duration-[240ms] ease-out ${
+                className={`${feature.span} group flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all duration-300 ease-out hover:border-mystic-mint/50 hover:shadow-[0_0_40px_rgba(217,232,226,0.15),inset_0_0_0_1px_rgba(217,232,226,0.22)] md:hover:scale-[1.02] ${
                   isActive
-                    ? "-translate-y-1 shadow-xl shadow-nocturnal-expedition/10"
-                    : "hover:-translate-y-1 hover:shadow-lg hover:shadow-nocturnal-expedition/10"
+                    ? "border-mystic-mint/50 shadow-[0_0_40px_rgba(217,232,226,0.15),inset_0_0_0_1px_rgba(217,232,226,0.22)] md:scale-[1.02]"
+                    : ""
                 }`}
                 key={feature.title}
                 onMouseEnter={() => setActiveIndex(index)}
@@ -112,7 +98,7 @@ export default function FeatureShowcase() {
                 <button
                   aria-controls={`feature-panel-${index}`}
                   aria-expanded={isActive}
-                  className="relative z-10 flex h-full w-full flex-col text-left"
+                  className="flex h-full w-full flex-col text-left"
                   onClick={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   type="button"
@@ -158,10 +144,10 @@ export default function FeatureShowcase() {
                     </span>
 
                     <span
-                      className={`grid transition-[max-height,opacity,transform] duration-[240ms] ease-out ${
+                      className={`grid overflow-hidden transition-[max-height,opacity,transform] duration-[240ms] ease-out md:max-h-none ${
                         isActive
-                          ? "max-h-64 translate-y-0 opacity-100 md:max-h-72"
-                          : "max-h-0 -translate-y-2 opacity-0"
+                          ? "max-h-64 translate-y-0 opacity-100"
+                          : "max-h-0 -translate-y-2 opacity-0 md:translate-y-3"
                       }`}
                       id={`feature-panel-${index}`}
                     >
